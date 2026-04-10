@@ -1,25 +1,65 @@
 services:
-  hadoop:
-    build: ./docker/hadoop
-    image: velolyon/hadoop:3.3.6
-    container_name: hadoop
-    hostname: hadoop
+  # =============== HADOOP (4 services) ===============
+  namenode:
+    build: .
+    image: velolyon/hadoop:3.4.3
+    container_name: namenode
+    hostname: namenode
+    command: ["hdfs", "namenode"]
     ports:
       - "9870:9870"
       - "9000:9000"
-      - "8088:8088"
-      - "8042:8042"
+    env_file:
+      - ./config
+    environment:
+      ENSURE_NAMENODE_DIR: "/tmp/hadoop-hadoop/dfs/name"
     volumes:
       - ./:/opt/project
     networks: [velolyon]
 
+  datanode:
+    build: .
+    image: velolyon/hadoop:3.4.3
+    container_name: datanode
+    command: ["hdfs", "datanode"]
+    env_file:
+      - ./config
+    depends_on: [namenode]
+    networks: [velolyon]
+
+  resourcemanager:
+    build: .
+    image: velolyon/hadoop:3.4.3
+    container_name: resourcemanager
+    hostname: resourcemanager
+    command: ["yarn", "resourcemanager"]
+    ports:
+      - "8088:8088"
+    env_file:
+      - ./config
+    depends_on: [namenode]
+    volumes:
+      - ./:/opt/project
+    networks: [velolyon]
+
+  nodemanager:
+    build: .
+    image: velolyon/hadoop:3.4.3
+    container_name: nodemanager
+    command: ["yarn", "nodemanager"]
+    env_file:
+      - ./config
+    depends_on: [resourcemanager]
+    networks: [velolyon]
+
+  # =============== HIVE ===============
   hive:
     image: apache/hive:4.0.0
     container_name: hive
-    depends_on: [hadoop]
+    depends_on: [namenode, datanode]
     environment:
       SERVICE_NAME: hiveserver2
-      SERVICE_OPTS: "-Xmx1G -Dfs.defaultFS=hdfs://hadoop:9000"
+      SERVICE_OPTS: "-Xmx1G -Dfs.defaultFS=hdfs://namenode:9000"
     ports:
       - "10000:10000"
       - "10002:10002"
@@ -27,6 +67,7 @@ services:
       - ./:/opt/project
     networks: [velolyon]
 
+  # =============== KAFKA ===============
   kafka:
     image: apache/kafka:3.7.0
     container_name: kafka
@@ -46,6 +87,7 @@ services:
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
     networks: [velolyon]
 
+  # =============== ATLAS ===============
   atlas:
     image: sburn/apache-atlas:2.3.0
     container_name: atlas
