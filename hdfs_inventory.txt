@@ -1,0 +1,8 @@
+drwxrwxrwx   - hadoop supergroup          0 2026-04-10 10:22 /data-lake/analytics
+drwxrwxrwx   - hadoop supergroup          0 2026-04-10 10:22 /data-lake/analytics/heatmap
+drwxrwxrwx   - hadoop supergroup          0 2026-04-10 10:22 /data-lake/processed
+drwxrwxrwx   - hadoop supergroup          0 2026-04-10 10:22 /data-lake/processed/anomalies
+drwxrwxrwx   - hadoop supergroup          0 2026-04-10 10:22 /data-lake/processed/horaire_quartier
+drwxrwxrwx   - hadoop supergroup          0 2026-04-10 10:22 /data-lake/processed/load_metrics
+drwxrwxrwx   - hadoop supergroup          0 2026-04-10 10:22 /data-lake/raw
+drwxrwxrwx   - hadoop supergroup          0 2026-04-10 10:22 /data-lake/raw/velo_lyon
