@@ -1,0 +1,40 @@
+{
+  "entities": [
+    {
+      "entity": {
+        "typeName": "hdfs_path",
+        "attributes": {
+          "name": "raw_velo_stations",
+          "qualifiedName": "/data-lake/raw/velo_lyon",
+          "description": "Les donnees brutes des stations velos",
+          "owner": "Sanae",
+          "path": "/data-lake/raw/velo_lyon"
+        }
+      }
+    },
+    {
+      "entity": {
+        "typeName": "hdfs_path",
+        "attributes": {
+          "name": "processed_load_factor",
+          "qualifiedName": "/data-lake/processed/load_metrics",
+          "description": "Load factor par station (MR1)",
+          "owner": "Sanae",
+          "path": "/data-lake/processed/load_metrics"
+        }
+      }
+    },
+    {
+      "entity": {
+        "typeName": "hdfs_path",
+        "attributes": {
+          "name": "processed_anomalies",
+          "qualifiedName": "/data-lake/processed/anomalies",
+          "description": "Anomalies par station sortie (MR2)",
+          "owner": "Sanae",
+          "path": "/data-lake/processed/anomalies"
+        }
+      }
+    }
+  ]
+}

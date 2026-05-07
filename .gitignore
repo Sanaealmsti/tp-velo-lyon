@@ -16,3 +16,4 @@ volumes/
 *.log
 logs/
 hdfs_data/
+.venv/
